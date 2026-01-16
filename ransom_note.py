@@ -10,4 +10,16 @@ def can_construct(ransomNote: str, magazine: str) -> bool:
     Returns:
         bool: True if ransomNote can be constructed, False otherwise.
     """
-    pass  # TODO: Implement this function
+    # Build a frequency table (hash table / dictionary) for available characters.
+    counts = {}
+    for ch in magazine:
+        counts[ch] = counts.get(ch, 0) + 1
+
+    # Try to "spend" characters to build the ransom note.
+    for ch in ransomNote:
+        # If the character is missing or we already used them all -> impossible.
+        if counts.get(ch, 0) == 0:
+            return False
+        counts[ch] -= 1
+
+    return True
